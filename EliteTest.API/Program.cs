@@ -29,6 +29,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfwork>();
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<DepartmentProfile>();
+    config.AddProfile<EmployeeProfile>();
+    config.AddProfile<EmployeeLogsProfile>();
 });
 
 

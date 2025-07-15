@@ -1,6 +1,7 @@
 ﻿using EliteTest.Application.Interfaces;
 using EliteTest.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     }
 
     #region Retrive 
+    public async Task<T> GetFirstWithIncludeAsync(Expression<Func<T, bool>> where, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
+    {
+        IQueryable<T> query = _dbSet;
+        if (include is not null)
+            query = include(query);
+
+        var result = await query.FirstOrDefaultAsync(where);
+        return result ?? throw new NullReferenceException();
+    }
     public async Task<T> GetByIdAsync(int id) => await _dbSet.FindAsync(id) ?? throw new NullReferenceException();
 
     public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
@@ -45,5 +55,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         _dbSet.Remove(entity);
     }
+
+    public async Task<IEnumerable<T>> FindWithIncludeAsync(Expression<Func<T, bool>> conditions, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
+    {
+        IQueryable<T> query = _dbSet;
+        if (include is not null)
+            query = include(query);
+
+        var result = await query.Where(conditions).ToListAsync();
+        return result;
+    }
+
+
     #endregion
 }

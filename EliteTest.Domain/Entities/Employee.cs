@@ -3,7 +3,7 @@ using EliteTest.Domain.Enums;
 
 namespace EliteTest.Domain.Entities;
 
-public sealed class Employee : BaseEntity
+public  class Employee : BaseEntity
 {
     private readonly List<EmployeeHistoryLog> _employeeHistoryLogs = new();
     public Employee(string name, string email, int departmentId, DateTime hireDate)
@@ -13,6 +13,7 @@ public sealed class Employee : BaseEntity
 
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email is required", nameof(email));
+
 
         Name = name;
         Email = email;
@@ -25,10 +26,21 @@ public sealed class Employee : BaseEntity
     public string Email { get; private set; }
     public DateTime HireDate { get; private set; }
     public int DepartmentId { get; private set; }
+    public bool IsDeleted { get; private set; }
 
-    public Department Department { get; set; }
+    public virtual Department Department { get; set; }
 
     public EmployeeStatus Status { get; private set; }
     public IReadOnlyCollection<EmployeeHistoryLog> EmployeeHistoryLogs => _employeeHistoryLogs.AsReadOnly();
     public void SetStatus(EmployeeStatus status) => Status = status;
+
+    public void AddHistoryLog(EmployeeHistoryLog log)
+    {
+        _employeeHistoryLogs.Add(log);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
 }

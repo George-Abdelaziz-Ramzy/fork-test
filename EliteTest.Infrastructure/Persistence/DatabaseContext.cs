@@ -39,6 +39,9 @@ public class DatabaseContext: DbContext
             .WithMany(d => d.Employees)
             .HasForeignKey(e => e.DepartmentId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        //modelBuilder.Entity<Employee>()
+        //    .HasQueryFilter(e => !e.IsDeleted);
         #endregion
 
         #region Department

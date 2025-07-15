@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EliteTest.Application.Commands.Employee;
-public record CreateEmployeeCommand(
+public record EmployeeCommand(
     [Required]
     [MaxLength(50)] 
     string Name,
@@ -15,7 +15,7 @@ public record CreateEmployeeCommand(
     [MaxLength(100)] 
     string Email,
     [Required]
-    [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+    [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
     int DepartmentId,
     [Required] 
     DateTime HireDate
