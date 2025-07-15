@@ -30,5 +30,5 @@ public sealed class Employee : BaseEntity
 
     public EmployeeStatus Status { get; private set; }
     public IReadOnlyCollection<EmployeeHistoryLog> EmployeeHistoryLogs => _employeeHistoryLogs.AsReadOnly();
-public void SetStatus(EmployeeStatus status) => Status = status;
+    public void SetStatus(EmployeeStatus status) => Status = status;
 }
