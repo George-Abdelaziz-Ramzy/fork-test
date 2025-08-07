@@ -1,3 +1,4 @@
+using EliteTest.API.Filters;
 using EliteTest.Application.Interfaces;
 using EliteTest.Application.Mappings;
 using EliteTest.Infrastructure;
@@ -18,13 +19,18 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+builder.Services.AddScoped<LoggingFilter>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LoggingFilter>();
+});
 
 //database connction string
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfwork>();
+
 
 builder.Services.AddAutoMapper(config =>
 {

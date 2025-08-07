@@ -20,4 +20,8 @@
     <ProjectReference Include="..\EliteTest.Infrastructure\EliteTest.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>
