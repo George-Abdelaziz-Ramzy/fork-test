@@ -43,19 +43,19 @@ builder.Services.AddAutoMapper(config =>
 var app = builder.Build();
 app.UseCors("AllowAll");
 
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+app.MapOpenApi();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "EliteTest API V1");
-        c.RoutePrefix = "";
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EliteTest API V1");
+    c.RoutePrefix = "";
+});
+//}
 
 app.MapControllers();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 
 app.Run();
