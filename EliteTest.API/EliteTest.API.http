@@ -1,4 +1,4 @@
-@EliteTest.API_HostAddress = http://localhost:5076
+@EliteTest.API_HostAddress = http://localhost:8080
 
 GET {{EliteTest.API_HostAddress}}/weatherforecast/
 Accept: application/json
